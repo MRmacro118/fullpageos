@@ -1,0 +1,116 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Welcome</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+                background-color: #f4f4f4;
+                position: relative;
+            }
+            .welcome-container {
+                text-align: center;
+            }
+            .welcome-container h1 {
+                font-size: 36px;
+            }
+            .welcome-container p {
+                font-size: 18px;
+            }
+            .input-container {
+                display: none;
+            }
+            .logout-button {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                padding: 8px 16px;
+                font-size: 14px;
+                background-color: #dc3545;
+                color: #fff;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                outline: none;
+                transition: background-color 0.3s;
+            }
+            .logout-button:hover {
+                background-color: #c82333;
+            }
+            input[type="text"] {
+                padding: 8px;
+                font-size: 16px;
+                margin-bottom: 10px;
+                width: 100%;
+                max-width: 300px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+            }
+            button {
+                padding: 8px 16px;
+                font-size: 14px;
+                background-color: #007BFF;
+                color: #fff;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+            button:hover {
+                background-color: #0056b3;
+            }
+        </style>
+    </head>
+    <body>
+        <button class="logout-button" onclick="logout()">Logout</button>
+        <div class="input-container" id="input-container">
+            <input type="text" id="name-input" placeholder="Enter your name">
+            <button onclick="submitName()">Submit</button>
+        </div>
+        <div class="welcome-container" id="welcome-container">
+            <h1 id="welcome-message">Welcome, Guest!</h1>
+            <p>You have successfully logged in.</p>
+        </div>
+
+        <script>
+            // Check if the name is already stored in localStorage
+            if (!localStorage.getItem('userName')) {
+                // Show the input form if name is not stored
+                document.getElementById('input-container').style.display = 'block';
+                document.getElementById('welcome-container').style.display = 'none';
+            } else {
+                // Display the welcome message if name is already stored
+                const userName = localStorage.getItem('userName');
+                document.getElementById('welcome-message').innerText = `Welcome, ${userName}!`;
+                document.getElementById('input-container').style.display = 'none';
+                document.getElementById('welcome-container').style.display = 'block';
+            }
+
+            function submitName() {
+                const nameInput = document.getElementById('name-input').value;
+                if (nameInput) {
+                    localStorage.setItem('userName', nameInput);
+                    document.getElementById('welcome-message').innerText = `Welcome, ${nameInput}!`;
+                    document.getElementById('input-container').style.display = 'none';
+                    document.getElementById('welcome-container').style.display = 'block';
+                }
+            }
+
+            function logout() {
+                // Clear the user session
+                localStorage.removeItem('userName');
+
+                // Show the input form and hide the welcome message
+                document.getElementById('input-container').style.display = 'block';
+                document.getElementById('welcome-container').style.display = 'none';
+            }
+        </script>
+    </body>
+    </html>
